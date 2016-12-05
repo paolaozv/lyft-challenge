@@ -13,7 +13,7 @@
     "browserify": "^13.1.1",
     "express": "^4.14.0",
     "jquery": "^3.1.1",
-    "lyft-api": "git://github.com/mnemonicflow/lyft-js"
+    "lyft-api": "git://github.com/mnemonicflow/lyft-js.git"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
