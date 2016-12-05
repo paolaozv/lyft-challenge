@@ -5,6 +5,11 @@ var button = document.getElementById("button");
 var origin = document.getElementById("origin");
 var destination = document.getElementById("destination");
 var map = document.getElementById("map");
+var originLatLon;
+var latOr;
+var longOr;
+var latDes;
+var longDes;
  
 function cargarPagina() {
     
@@ -12,6 +17,8 @@ function cargarPagina() {
     var myOptions = {
         zoom: 13,
         center: myLatlng,
+        mapTypeControl: false,
+        streetViewControl: false,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     map = new google.maps.Map(map, myOptions);
@@ -29,6 +36,24 @@ function travelToAddress(e) {
         provideRouteAlternatives: true
     };
 
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({"address": origin.value}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            latOr = results[0].geometry.location.lat();
+            longOr = results[0].geometry.location.lng();
+            console.log(latOr, longOr);
+        }
+    });
+
+    var geocoderDes = new google.maps.Geocoder();
+    geocoderDes.geocode({"address": destination.value}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            var latDes = results[0].geometry.location.lat();
+            var longDes = results[0].geometry.location.lng();
+            console.log(latDes, longDes);
+        }
+    });
+
     directionsService.route(request, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
             directionsRenderer.setMap(map);
@@ -37,4 +62,6 @@ function travelToAddress(e) {
             alert("Destination is outside of service area");
         }
     });
+    origin.value = "";
+    destination.value = "";
 }
