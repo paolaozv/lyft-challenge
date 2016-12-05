@@ -25,7 +25,7 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Cities<span class="sr-only">(current)</span></a></li>
+          <li><a href="#">Cities<span class="sr-only">(current)</span></a></li>
           <li><a href="#">Help</a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Explore <span class="caret"></span></a>
@@ -39,7 +39,7 @@
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#"><button type="button" class="btn btn-default">Drive with Lyft</button></a></li>
+          <li><button type="button" class="drive btn btn-default">Drive with Lyft</button></li>
           <li><a href="#">Log In</a></li>
           <li><a href="#"><span class="sign">Sign Up</span></a></li>
         </ul>
@@ -49,13 +49,43 @@
 <!-- Map -->
   <div id="map" class="map"></div>
 <!-- Inputs -->
-	<input type="text" id="origin">
-	<input type="text" id="destination">
-	<button type="submit" id="button">Go</button>
+  <div id="inputbox" class="text-center">
+    <div class="white">
+      <span class="label-input">Estimate fare</span>
+      <hr>
+      <div class="row">
+        <div class="col-md-2 col-xs-2">
+          <i class="circles purple fa fa-circle" aria-hidden="true"></i>
+        </div>
+        <div class="col-md-10 col-xs-2">
+          <input class="route-input" placeholder="Add Pickup Location" type="text" id="origin">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2 col-xs-2">
+          <span class="graypipe">|</span>
+        </div>
+        <div class="col-md-10 col-xs-10">
+          <hr>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2 col-xs-2">
+          <i class="circles fucsia fa fa-circle" aria-hidden="true"></i>
+        </div>
+        <div class="col-md-10 col-xs-2">
+      <input class="route-input" placeholder="Add Destination" type="text" id="destination">
+        </div>
+      </div>
+     </div>
+    <button type="submit" id="button">Get Estimate</button>
+  </div>
+
 <!-- Scripts -->
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTsRpJv4wUhdpblxkzfZB_6QRpKUFAxC0" type="text/javascript"></script>
   <script src="//code.jquery.com/jquery-2.2.4.min.js" crossorigin="anonymous"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="//use.fontawesome.com/a4f2ba36c5.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
