@@ -9,7 +9,47 @@
 </head>
 
 <body>
-	<div id="map" class="map"></div>
+<!-- Navbar -->
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html"><img src="img/lyft_logotype.png" alt="lyft-logotype"></a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Cities<span class="sr-only">(current)</span></a></li>
+          <li><a href="#">Help</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Explore <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action 1</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Action 2</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Action 3</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+        	<li><a href="#"><button type="button" class="btn btn-default">Drive with Lyft</button></a></li>
+          <li><a href="#">Log In</a></li>
+          <li><a href="#">Sign Up</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+<!-- Map -->
+  <div id="map" class="map"></div>
+
 <!-- Scripts -->
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTsRpJv4wUhdpblxkzfZB_6QRpKUFAxC0" type="text/javascript"></script>
   <script src="//code.jquery.com/jquery-2.2.4.min.js" crossorigin="anonymous"></script>
