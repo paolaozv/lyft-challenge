@@ -1,5 +1,5 @@
 window.addEventListener("load", cargarPagina);
- 
+
 var map;
 var button = document.getElementById("button");
 var origin = document.getElementById("origin");
@@ -12,7 +12,7 @@ var latDes;
 var longDes;
  
 function cargarPagina() {
-    
+
     var myLatlng = new google.maps.LatLng(-12.0552477, -77.0802424);
     var myOptions = {
         zoom: 13,
