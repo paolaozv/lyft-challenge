@@ -48,7 +48,7 @@
 <!-- Map -->
   <div id="map" class="map"></div>
 <!-- Inputs -->
-  <div id="estimate-fare" class="inputbox text-center">
+  <div id="estimate-fare" class="halfpad inputbox text-center">
     <div class="white">
       <span class="label-input">Estimate fare</span>
       <hr>
@@ -81,60 +81,60 @@
   </div>
   <!-- Ride types -->
   <div id="signup-ride" class="inputbox text-center">
-    <div class="white">
+    <div class="white pad">
       <span class="label-input">Available ride types</span>
       <hr>
       <div class="row">
-        <div class="col-md-4 col-xs-4 image">
+        <div class="car image">
           <img src="img/lyft-line.png" alt="">
         </div>
-        <div class="col-md-5 col-xs-5 ride-type text-left">
+        <div class="content text-left">
           <p class="title">Line</p>
           <span class="status">Shared, 2 riders max</span>
         </div>
-        <div class="col-md-3 col-xs-3 cost">
+        <div class="prices text-right">
           <span class="price">$4-6</span>
           <i class="fa fa-info-circle info" aria-hidden="true" data-toggle="modal" data-target="#lyftLine"></i>
         </div>
       </div>
       <hr>
       <div class="row">
-        <div class="col-md-4 col-xs-4 image">
+        <div class="car image">
           <img src="img/lyft-car.png" alt="">
         </div>
-        <div class="col-md-5 col-xs-5 ride-type text-left">
+        <div class="content text-left">
           <p class="title">Lyft</p>
           <span class="status">4 seats</span>
         </div>
-        <div class="col-md-3 col-xs-3 cost">
+        <div class="prices text-right">
           <span class="price">$7-9</span>
           <i class="fa fa-info-circle info" aria-hidden="true" data-toggle="modal" data-target="#lyftRide"></i>
         </div>
       </div>
       <hr>
       <div class="row">
-        <div class="col-md-4 col-xs-4 image">
+        <div class="car image">
           <img src="img/lyft-plus.png" alt="">
         </div>
-        <div class="col-md-5 col-xs-5 ride-type text-left">
+        <div class="content text-left">
           <p class="title">Plus</p>
           <span class="status">6 seats</span>
         </div>
-        <div class="col-md-3 col-xs-3 cost">
+        <div class="prices text-right">
           <span class="price">$14-16</span>
           <i class="fa fa-info-circle info" aria-hidden="true"  data-toggle="modal" data-target="#plusRide"></i>
         </div>
       </div>
       <hr>
       <div class="row">
-        <div class="col-md-4 col-xs-4 image">
+        <div class="car image">
           <img src="img/premier.png" alt="">
         </div>
-        <div class="col-md-5 col-xs-5 ride-type text-left">
+        <div class="content text-left">
           <p class="title">Premier</p>
           <span class="status">High-end, 4 seats</span>
         </div>
-        <div class="col-md-3 col-xs-3 cost">
+        <div class="prices text-right">
           <span class="price">$18-20</span>
           <i class="fa fa-info-circle info" aria-hidden="true" data-toggle="modal" data-target="#premierRide" ></i>
         </div>
@@ -149,19 +149,19 @@
     '<div class="modal-dialog" role="document">
         <div class="modal-body text-center">
           <div class="modal-1">
-            <span>Lyft Line</span><br><span>$4 - 6</span><br>
+            <b>Lyft Line</b><br><span>$4 - 6</span><br>
             <img src="img/lyft-match.png"  class="image-car" alt="">
           </div>
           <div class="modal-2">
             <div class="row text-center">
-              <h4>Smartly routed</strong></h4>
-              <p>Lyft Line matches you with others travelling the same way</p>
-              <h4>Fixed trip price</h4>
-              <p>Price is set and always less than original Lyft, even if you don'tmatch with another rider.</p>
+              <strong class="lil">Smartly routed</strong>
+              <p class="sml">Lyft Line matches you with others travelling the same way</p>
+              <strong class="lil">Fixed trip price</strong>
+              <p class="sml">Price is set and always less than original Lyft, even if you don'tmatch with another rider.</p>
             </div>
           </div>
         </div>
-      <p class="close-modal text-center" data-dismiss="modal">X</p> 
+      <p class="close-modal text-center" data-dismiss="modal">X</p>
     </div>
   </div><!-- /.modal -->
   <!-- Modal 2-->
@@ -193,7 +193,7 @@
             <p class="note">$1.75 Service fee added to all rides</p>
           </div>
         </div>
-      <p class="close-modal text-center" data-dismiss="modal">X</p> 
+      <p class="close-modal text-center" data-dismiss="modal">X</p>
     </div>
   </div><!-- /.modal -->
   <!-- Modal 3-->
@@ -225,7 +225,7 @@
             <p class="note">$1.75 Service fee added to all rides</p>
           </div>
         </div>
-      <p class="close-modal text-center" data-dismiss="modal">X</p> 
+      <p class="close-modal text-center" data-dismiss="modal">X</p>
     </div>
   </div><!-- /.modal -->
   <!-- Modal 4-->
@@ -257,7 +257,7 @@
             <p class="note">$1.75 Service fee added to all rides</p>
           </div>
         </div>
-      <p class="close-modal text-center" data-dismiss="modal">X</p> 
+      <p class="close-modal text-center" data-dismiss="modal">X</p>
     </div>
   </div><!-- /.modal -->
 <!-- Scripts -->
