@@ -1,7 +1,7 @@
 window.addEventListener("load", cargarPagina);
 
 var map;
-var button = document.getElementById("button");
+var button = document.getElementById("button-getestimate");
 var origin = document.getElementById("origin");
 var destination = document.getElementById("destination");
 var map = document.getElementById("map");
@@ -10,7 +10,7 @@ var latOr;
 var longOr;
 var latDes;
 var longDes;
- 
+
 function cargarPagina() {
 
     var myLatlng = new google.maps.LatLng(-12.0552477, -77.0802424);
@@ -71,6 +71,6 @@ function initialize() {
     var autocomplete = new google.maps.places.Autocomplete(input);
 
     var inputDos = document.getElementById('destination');
-    var autocompleteDos = new google.maps.places.Autocomplete(inputDos);    
+    var autocompleteDos = new google.maps.places.Autocomplete(inputDos);
 }
 google.maps.event.addDomListener(window, 'load', initialize);
