@@ -30,3 +30,4 @@ var callback = function(error, data, response) {
   }
 };
 api.costGet(startLat, startLng, opts, callback);
+
