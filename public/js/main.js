@@ -14,8 +14,6 @@ var latOr;
 var longOr;
 var latDes;
 var longDes;
-var desLatlon;
-var origLatlon;
 var access_token = null;
 
 function cargarPagina() {
@@ -60,75 +58,24 @@ function cargarPagina() {
 function travelToAddress(e) {
     e.preventDefault();
 
-    var request = {
-        origin: origin.value,
-        destination: destination.value,
-        travelMode: google.maps.TravelMode.DRIVING,
-        provideRouteAlternatives: true
-    };
-
-    var geocoder = new google.maps.Geocoder();
-        geocoder.geocode({"address": origin.value}, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                latOr = results[0].geometry.location.lat();
-                longOr = results[0].geometry.location.lng();
-                origLatlon = new google.maps.LatLng(latOr, longOr);
-                console.log(origLatlon);
-                console.log(latOr, longOr);
-            }
-    });
-
-    var geocoderDes = new google.maps.Geocoder();
-    geocoderDes.geocode({"address": destination.value}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-            latDes = results[0].geometry.location.lat();
-            longDes = results[0].geometry.location.lng();
-            desLatlon = new google.maps.LatLng(latDes, longDes);
-            console.log(latDes, longDes);
-            console.log(desLatlon);
-        }
-    });
-
-    directionsService.route(request, function(response, status) {
-        if (status == google.maps.DirectionsStatus.OK) {
-            directionsRenderer.setMap(map);
-            directionsRenderer.setDirections(response);
-            directionsRenderer.setOptions( { suppressMarkers: true } );
-            var pinOrig = '../img/map-pin-blue.png';
-            var marker = new google.maps.Marker({
-                position: origLatlon,
-                map: map,
-                icon: pinOrig
-            });
-            var pinDes = '../img/map-pin-pink.png';
-            var marker = new google.maps.Marker({
-                position: desLatlon,
-                map: map,
-                icon: pinDes
-            });
-            $.ajax({
-              url: 'https://api.lyft.com/v1/cost',
-              data: {
-                start_lat: Number(latOr),
-                start_lng: Number(longOr),
-                end_lat: Number(latDes),
-                end_lng: Number(longDes)
-              },
-              beforeSend: function (xhr) {
-                xhr.setRequestHeader ("Authorization", "bearer " + access_token);
-              },
-              success: function(response) {
-                console.log(response);
-              },
-              error: function(error) {
-                console.log(error);
-              }
-            });
-        } else {
-            alert("Destination is outside of service area");
-        }
-    });
-
+    $.ajax({
+      url: 'https://api.lyft.com/v1/cost',
+      data: {
+        start_lat: Number(latOr),
+        start_lng: Number(longOr),
+        end_lat: Number(latDes),
+        end_lng: Number(longDes)
+      },
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader ("Authorization", "bearer " + access_token);
+      },
+      success: function(response) {
+        console.log(response);
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    }); 
 }
 
 function initialize() {
@@ -137,7 +84,85 @@ function initialize() {
 
     var inputDos = document.getElementById('destination');
     var autocompleteDos = new google.maps.places.Autocomplete(inputDos);
+    autocomplete.addListener('place_changed', function() {
+        
+        
+        var marker = new google.maps.Marker({
+            map: map,
+            anchorPoint: new google.maps.Point(0, -29)
+        });
+        marker.setVisible(false);
+        var place = autocomplete.getPlace();
+        if (!place.geometry) {
+          window.alert("Autocomplete's returned place contains no geometry");
+          return;
+        }
+
+        if (place.geometry.viewport) {
+          map.fitBounds(place.geometry.viewport);
+        } else {
+          map.setCenter(place.geometry.location);
+          map.setZoom(17);
+        }
+        marker.setIcon(({
+          url: '../img/map-pin-blue.png'
+        }));
+        marker.setPosition(place.geometry.location);
+        marker.setVisible(true);
+        console.log(place.icon);
+        
+
+    });
+
+    autocompleteDos.addListener('place_changed', function() {
+        
+        
+        var marker = new google.maps.Marker({
+            map: map,
+            anchorPoint: new google.maps.Point(0, -29)
+        });
+        marker.setVisible(false);
+        var place = autocompleteDos.getPlace();
+        if (!place.geometry) {
+          window.alert("Autocomplete's returned place contains no geometry");
+          return;
+        }
+
+        if (place.geometry.viewport) {
+          map.fitBounds(place.geometry.viewport);
+        } else {
+          map.setCenter(place.geometry.location);
+          map.setZoom(17); 
+        }
+        marker.setIcon(({
+          url: '../img/map-pin-pink.png'
+        }));
+        marker.setPosition(place.geometry.location);
+        marker.setVisible(true);
+        console.log(place.geometry.location);
+        var request = {
+            origin: origin.value,
+            destination: destination.value,
+            travelMode: google.maps.TravelMode.DRIVING,
+            provideRouteAlternatives: true
+        
+        };
+
+    directionsService.route(request, function(response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+            directionsRenderer.setMap(map);
+            directionsRenderer.setDirections(response);
+            directionsRenderer.setOptions( { suppressMarkers: true } );
+        } else {
+            alert("Destination is outside of service area");
+        }
+
+    });
+    });
+
+
 }
+
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
@@ -169,3 +194,6 @@ var hideCard = function() {
     $('#signup-ride').removeClass("showRides");
     $('#button-getestimate').removeClass("hideButton");
 };
+
+
+
