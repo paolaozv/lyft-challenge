@@ -112,7 +112,7 @@ function getAjax(e) {
                                            .replace("{{max}}", (costes.estimated_cost_cents_max/100))
                                            .replace("{{image}}", "img/" + image)
                                            .replace("{{text}}", text)
-                                           .replace("{{id}}", "#" + i+1));
+                                           .replace("{{id}}", "#" + parseInt(i+1)));
         });
       },
       error: function(error) {
