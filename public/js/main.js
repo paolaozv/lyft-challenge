@@ -1,21 +1,21 @@
-window.addEventListener("load", cargarPagina);
+// variables
+var markerOr;
+var marker;
+var latOr;
+var longOr;
+var latDes;
+var longDes;
 
 var button = document.getElementById("button-getestimate");
 var origin = document.getElementById("origin");
 var destination = document.getElementById("destination");
 var map = document.getElementById("map");
-var markerOr;
-var marker;
+var directionsService = new google.maps.DirectionsService();
 var directionsRenderer = new google.maps.DirectionsRenderer({
     polylineOptions: {
              strokeColor: "#352384"
-       }
+    }
 });
-var directionsService = new google.maps.DirectionsService();
-var latOr;
-var longOr;
-var latDes;
-var longDes;
 var access_token = "gAAAAABYRy6WdpdDRDzBado0QL4XhC3hBBAFzypCYCQUMRYLWSSomzs4Fw6dVTj9AnMCmP2LB8vj4apnu2HBtUfHCIhglfPcLVISIkmRRGa6yL5YwvovdkxvIObmONhG8S8L-_cStnls9-MBjjtp8e2B_53e-xmkHxD69sXzhzDKQSlGTWC3zThobBb_FltN3tZ1W9eXRSSfjjjrnYmsJRLvCw8E4VpJjA==";
 
 var template = '<hr class="sep">' +
@@ -33,10 +33,16 @@ var template = '<hr class="sep">' +
                     '</div>' +
                 '</div>';
 
-function cargarPagina() {
-
+var loadPage = function() {
     var clientId = 'NIR2JfxWyaiW';
     var clientSecret = 'xqIMb-QVcQJWCJE5KMmGcAeofJYA5PgZ';
+    /*window.location.href = "index.html" + "?dl=true";*/
+
+   /* if (window.location.href = "index.html" + "?dl=true") {
+        $("#popup").show();
+    } else {
+        $("#popup").hide();
+    }*/
 
     /*$.ajax({
       url: 'https://api.lyft.com/oauth/token',
@@ -70,9 +76,16 @@ function cargarPagina() {
     $('#button-getestimate').click(getAjax);
     $('#button-getestimate').click(validate);
     $("#origin").click(hideCard);
-}
+    /*$(".downpop").click(redirect);*/
+};
 
-function getAjax(e) {
+$(document).ready(loadPage);
+
+/*var redirect = function() {
+    window.location.href = "index.html";
+};*/
+
+var getAjax = function(e) {
     e.preventDefault();
     console.log(latDes);
     $.ajax({
@@ -119,9 +132,9 @@ function getAjax(e) {
         console.log(error);
       }
     }); 
-}
+};
 
-function initialize() {
+var initialize = function() {
     var input = document.getElementById('origin');
     var autocomplete = new google.maps.places.Autocomplete(input);
 
@@ -227,10 +240,7 @@ function initialize() {
 
         });
     });
-
-
-}
-
+};
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
@@ -262,6 +272,3 @@ var hideCard = function() {
     $('#signup-ride').removeClass("showRides");
     $('#button-getestimate').removeClass("hideButton");
 };
-
-
-
