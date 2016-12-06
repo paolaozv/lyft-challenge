@@ -4,6 +4,8 @@ var button = document.getElementById("button-getestimate");
 var origin = document.getElementById("origin");
 var destination = document.getElementById("destination");
 var map = document.getElementById("map");
+var markerOr;
+var marker;
 var directionsRenderer = new google.maps.DirectionsRenderer({
     polylineOptions: {
              strokeColor: "#352384"
@@ -50,14 +52,14 @@ function cargarPagina() {
     };
     map = new google.maps.Map(map, myOptions);
 
-    button.addEventListener("click", travelToAddress);
+    $('#button-getestimate').click(getAjax);
     $('#button-getestimate').click(validate);
     $("#origin").click(hideCard);
 }
 
-function travelToAddress(e) {
+function getAjax(e) {
     e.preventDefault();
-
+    console.log(latDes);
     $.ajax({
       url: 'https://api.lyft.com/v1/cost',
       data: {
@@ -85,13 +87,20 @@ function initialize() {
     var inputDos = document.getElementById('destination');
     var autocompleteDos = new google.maps.places.Autocomplete(inputDos);
     autocomplete.addListener('place_changed', function() {
+        directionsRenderer.setMap(null);
         
+        if (markerOr != null) {
+            markerOr.setMap(null);    
+        }
+        if (marker != null) {
+            marker.setMap(null);
+        }
         
-        var marker = new google.maps.Marker({
+        markerOr = new google.maps.Marker({
             map: map,
             anchorPoint: new google.maps.Point(0, -29)
         });
-        marker.setVisible(false);
+        markerOr.setVisible(false);
         var place = autocomplete.getPlace();
         if (!place.geometry) {
           window.alert("Autocomplete's returned place contains no geometry");
@@ -104,27 +113,29 @@ function initialize() {
           map.setCenter(place.geometry.location);
           map.setZoom(17);
         }
-        marker.setIcon(({
+        markerOr.setIcon(({
           url: '../img/map-pin-blue.png'
         }));
-        marker.setPosition(place.geometry.location);
-        marker.setVisible(true);
+        markerOr.setPosition(place.geometry.location);
+        markerOr.setVisible(true);
 
         var geocoder = new google.maps.Geocoder();
-            geocoder.geocode( { "address": origin.value}, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    var latOr = results[0].geometry.location.lat();
-                    var  longOr = results[0].geometry.location.lng();
-                    console.log(latOr, longOr);
-                } 
+        geocoder.geocode( { "address": origin.value}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                latOr = results[0].geometry.location.lat();
+                longOr = results[0].geometry.location.lng();
+                console.log(latOr, longOr);
+            } 
         });
 
     });
 
     autocompleteDos.addListener('place_changed', function() {
+        if (marker != null) {
+            marker.setMap(null);    
+        }
         
-        
-        var marker = new google.maps.Marker({
+        marker = new google.maps.Marker({
             map: map,
             anchorPoint: new google.maps.Point(0, -29)
         });
@@ -150,8 +161,8 @@ function initialize() {
         var geocoder = new google.maps.Geocoder();
             geocoder.geocode( { "address": destination.value}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
-                    var latDes = results[0].geometry.location.lat();
-                    var  longDes = results[0].geometry.location.lng();
+                    latDes = results[0].geometry.location.lat();
+                    longDes = results[0].geometry.location.lng();
                     console.log(latDes, longDes);
                 } 
         });
