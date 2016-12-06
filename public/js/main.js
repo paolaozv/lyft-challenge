@@ -24,6 +24,7 @@ function cargarPagina() {
     map = new google.maps.Map(map, myOptions);
     button.addEventListener("click", travelToAddress);
     $('#button-getestimate').click(validate);
+    $("#origin").click(hideCard);
 }
 
 function travelToAddress(e) {
@@ -111,3 +112,11 @@ $('.info').click(function(){
 $('.close-modal').click(function(){
     $('.wrapper').removeClass('bg-blur');
 });
+
+
+var hideCard = function() {
+    $("#origin").val("");
+    $("#destination").val("");
+    $('#signup-ride').removeClass("showRides");
+    $('#button-getestimate').removeClass("hideButton");
+};
