@@ -270,3 +270,37 @@ nav {
 .pac-icon-maker {
   width: 50%;
 }
+@media (max-width: 340px) {
+  .inputbox {
+    max-width: 300px;
+    width: 280px;
+  }
+  .inputbox .white {
+    background-color: #f00;
+  }
+  .inputbox .buttons {
+    max-width: 280px;
+  }
+  #estimate-fare {
+    position: relative;
+    top: -200px;
+    margin-bottom: -200px;
+  }
+}
+@media (min-width: 341px) and (max-width: 512px) {
+  .inputbox {
+    max-width: 340px;
+    width: 320px;
+  }
+  .inputbox .white {
+    background-color: #f00;
+  }
+  .inputbox .buttons {
+    max-width: 340px;
+  }
+  #estimate-fare {
+    position: relative;
+    top: -200px;
+    margin-bottom: -200px;
+  }
+}
