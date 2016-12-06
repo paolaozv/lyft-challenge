@@ -271,6 +271,15 @@ div#bs-example-navbar-collapse-1 {
   background-image: none !important;
   height: 0px;
 }
+.infoimg {
+  width: 12px;
+}
+.pop {
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  z-index: 1;
+}
 .modal-dialog {
   width: 320px;
 }
