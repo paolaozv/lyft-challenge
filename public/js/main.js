@@ -42,9 +42,9 @@ function cargarPagina() {
       }
     });
 
-    var myLatlng = new google.maps.LatLng(-12.0788, -77.0655);
+    var myLatlng = new google.maps.LatLng(37.7749300, -122.4194200);
     var myOptions = {
-        zoom: 13,
+        zoom: 9,
         center: myLatlng,
         mapTypeControl: false,
         streetViewControl: false,
@@ -98,6 +98,7 @@ function travelToAddress(e) {
             var marker = new google.maps.Marker({
                 position: origLatlon,
                 map: map,
+                icon: pinOrig
             });
             var pinDes = '../img/map-pin-pink.png';
             var marker = new google.maps.Marker({
