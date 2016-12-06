@@ -23,6 +23,7 @@ function cargarPagina() {
     };
     map = new google.maps.Map(map, myOptions);
     button.addEventListener("click", travelToAddress);
+    $('#button-getestimate').click(validate);
 }
 
 function travelToAddress(e) {
@@ -80,8 +81,6 @@ function travelToAddress(e) {
             alert("Destination is outside of service area");
         }
     });
-    origin.value = "";
-    destination.value = "";
 }
 
 function initialize() {
@@ -105,4 +104,3 @@ var validate = function() {
     //     alert("You must insert an origin and destination location");
     // }
 };
-$('#button-getestimate').click(validate);
