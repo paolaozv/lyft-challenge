@@ -227,13 +227,14 @@ nav {
   display: block;
   border: none;
   width: 90%;
+  margin: 5px 0px;
 }
 .inputbox .white .route-input:focus {
   outline: 0 !important;
 }
 .inputbox .white .circles {
   font-size: 10px;
-  margin-left: 20px;
+  margin: 10px 0px 5px 20px;
 }
 .inputbox .white .fucsia {
   color: #ff00bf;
