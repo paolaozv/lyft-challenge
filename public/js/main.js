@@ -36,8 +36,7 @@ function travelToAddress(e) {
         travelMode: google.maps.TravelMode.DRIVING,
         provideRouteAlternatives: true
     };
-    /*directionsRenderer.setMap(null);
-    directionsRenderer.setPanel(null);*/
+
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({"address": origin.value}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
