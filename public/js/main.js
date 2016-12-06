@@ -1,11 +1,11 @@
 window.addEventListener("load", cargarPagina);
 
-var map;
 var button = document.getElementById("button-getestimate");
 var origin = document.getElementById("origin");
 var destination = document.getElementById("destination");
 var map = document.getElementById("map");
-var originLatLon;
+var directionsRenderer = new google.maps.DirectionsRenderer();
+var directionsService = new google.maps.DirectionsService();
 var latOr;
 var longOr;
 var latDes;
@@ -27,32 +27,50 @@ function cargarPagina() {
 
 function travelToAddress(e) {
     e.preventDefault();
-    var directionsRenderer = new google.maps.DirectionsRenderer();
-    var directionsService = new google.maps.DirectionsService();
+    /*var desLatlon;
+    var origLatlon;*/
     var request = {
         origin: origin.value,
         destination: destination.value,
         travelMode: google.maps.TravelMode.DRIVING,
         provideRouteAlternatives: true
     };
-
+    /*directionsRenderer.setMap(null);
+    directionsRenderer.setPanel(null);*/
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({"address": origin.value}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
             latOr = results[0].geometry.location.lat();
             longOr = results[0].geometry.location.lng();
+            desLatlon = new google.maps.LatLng(latOr, longOr);
             console.log(latOr, longOr);
         }
     });
+
+   /* var iconOrigin = "../img/";
+    var markerOr = new google.maps.Marker({
+        position: origLatlon,
+        map: map,
+        icon: iconOrigin + "origin.png"
+    });*/
 
     var geocoderDes = new google.maps.Geocoder();
     geocoderDes.geocode({"address": destination.value}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
             var latDes = results[0].geometry.location.lat();
             var longDes = results[0].geometry.location.lng();
+            origLatlon = new google.maps.LatLng(latDes, longDes);
             console.log(latDes, longDes);
+            console.log(origLatlon);
         }
     });
+
+    /*var iconDestination = "../img/";
+    var markerDes = new google.maps.Marker({
+        position: desLatlon,
+        map: map,
+        icon: iconDestination + "destination.png"
+    });*/
 
     directionsService.route(request, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
@@ -74,20 +92,3 @@ function initialize() {
     var autocompleteDos = new google.maps.places.Autocomplete(inputDos);
 }
 google.maps.event.addDomListener(window, 'load', initialize);
-
-//Validate inputs and show type of rides
-var validate = function() {
-    var originVal = $("#origin").val().trim().length;
-    var destinationVal = $("#destination").val().trim().length;
-    if (originVal > 0 && destinationVal > 0) {
-        $('#signup-ride').addClass('showRides');
-        $('#button-getestimate').addClass('hideButton');
-    } 
-    // else{
-    //     alert("You must insert an origin and destination location");
-    // }
-};
-$('#button-getestimate').click(validate);
-
-
-
