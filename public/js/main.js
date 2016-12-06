@@ -88,6 +88,3 @@ var validate = function() {
     // }
 };
 $('#button-getestimate').click(validate);
-
-
-
