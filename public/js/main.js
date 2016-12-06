@@ -104,3 +104,11 @@ var validate = function() {
     //     alert("You must insert an origin and destination location");
     // }
 };
+
+//Blur background
+$('.info').click(function(){
+    $('.wrapper').addClass('bg-blur');
+});
+$('.close-modal').click(function(){
+    $('.wrapper').removeClass('bg-blur');
+});
