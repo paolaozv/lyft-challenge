@@ -4,9 +4,9 @@ var button = document.getElementById("button-getestimate");
 var origin = document.getElementById("origin");
 var destination = document.getElementById("destination");
 var map = document.getElementById("map");
-var directionsRenderer = new google.maps.DirectionsRenderer({ 
+var directionsRenderer = new google.maps.DirectionsRenderer({
     polylineOptions: {
-             strokeColor: "#9194a1 "
+             strokeColor: "#352384"
        }
 });
 var directionsService = new google.maps.DirectionsService();
@@ -59,7 +59,7 @@ function cargarPagina() {
 
 function travelToAddress(e) {
     e.preventDefault();
-    
+
     var request = {
         origin: origin.value,
         destination: destination.value,
