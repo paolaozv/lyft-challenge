@@ -92,3 +92,17 @@ function initialize() {
     var autocompleteDos = new google.maps.places.Autocomplete(inputDos);
 }
 google.maps.event.addDomListener(window, 'load', initialize);
+
+//Validate inputs and show type of rides
+var validate = function() {
+    var originVal = $("#origin").val().trim().length;
+    var destinationVal = $("#destination").val().trim().length;
+    if (originVal > 0 && destinationVal > 0) {
+        $('#signup-ride').addClass('showRides');
+        $('#button-getestimate').addClass('hideButton');
+    }
+    // else{
+    //     alert("You must insert an origin and destination location");
+    // }
+};
+$('#button-getestimate').click(validate);
