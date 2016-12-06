@@ -65,3 +65,12 @@ function travelToAddress(e) {
     origin.value = "";
     destination.value = "";
 }
+
+function initialize() {
+    var input = document.getElementById('origin');
+    var autocomplete = new google.maps.places.Autocomplete(input);
+
+    var inputDos = document.getElementById('destination');
+    var autocompleteDos = new google.maps.places.Autocomplete(inputDos);    
+}
+google.maps.event.addDomListener(window, 'load', initialize);
