@@ -71,12 +71,49 @@ nav {
   font-weight: bold;
   font-size: 1em !important;
 }
-.drive {
-  padding: 5px 10px;
-  border: 1px solid #212121;
-  color: #212121;
-  margin-top: 10px;
-  border-radius: 7px;
+.custom {
+  display: none;
+}
+.navbar-toggle .collapsed {
+  position: relative;
+  left: 0;
+}
+.navbar-toggle {
+  float: left;
+  margin-left: 15px;
+}
+.drive-res {
+  border: 1px solid #a9aaaf;
+  border-radius: 6px;
+  display: none;
+}
+.navbar-nav li a {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 5px;
+}
+@media only screen and (max-width: 550px) {
+  .navbar-brand img {
+    margin-left: 7rem;
+  }
+  .drive-res {
+    border: none;
+  }
+  .sign {
+    display: none;
+  }
+  .custom {
+    display: block;
+    font-weight: bold;
+    text-align: right;
+    padding: 19px;
+    color: #ff00bf;
+    font-size: 1em !important;
+  }
+  a:hover {
+    color: #ff00bf;
+    text-decoration: none;
+  }
 }
 .navbar {
   height: 10vh;
