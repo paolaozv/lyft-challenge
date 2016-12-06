@@ -72,13 +72,13 @@ function travelToAddress(e) {
             directionsRenderer.setMap(map);
             directionsRenderer.setDirections(response);
             directionsRenderer.setOptions( { suppressMarkers: true } );
-            var pinOrig = '../img/map-pin-blue.svg';
+            var pinOrig = '../img/map-pin-blue.png';
             var marker = new google.maps.Marker({
                 position: origLatlon,
                 map: map,
                 icon: pinOrig
             });
-            var pinDes = '../img/map-pin-pink.svg';
+            var pinDes = '../img/map-pin-pink.png';
             var marker = new google.maps.Marker({
                 position: desLatlon,
                 map: map,
