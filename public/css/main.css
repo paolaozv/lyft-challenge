@@ -130,11 +130,14 @@ nav {
   left: 20px;
   z-index: 2 !important;
 }
-#estimate-fare hr {
-  margin: 0px !important;
-}
 #estimate-fare .est {
   margin: 20px;
+}
+#estimate-fare .five {
+  margin: 5px 0px;
+}
+#estimate-fare .ten {
+  margin: 10px 0px;
 }
 #signup-ride {
   position: absolute;
