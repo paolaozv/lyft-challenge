@@ -68,14 +68,14 @@ function travelToAddress(e) {
     };
 
     var geocoder = new google.maps.Geocoder();
-    geocoder.geocode({"address": origin.value}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-            latOr = results[0].geometry.location.lat();
-            longOr = results[0].geometry.location.lng();
-            origLatlon = new google.maps.LatLng(latOr, longOr);
-            console.log(origLatlon);
-            console.log(latOr, longOr);
-        }
+        geocoder.geocode({"address": origin.value}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                latOr = results[0].geometry.location.lat();
+                longOr = results[0].geometry.location.lng();
+                origLatlon = new google.maps.LatLng(latOr, longOr);
+                console.log(origLatlon);
+                console.log(latOr, longOr);
+            }
     });
 
     var geocoderDes = new google.maps.Geocoder();
