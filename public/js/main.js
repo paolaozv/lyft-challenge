@@ -109,8 +109,15 @@ function initialize() {
         }));
         marker.setPosition(place.geometry.location);
         marker.setVisible(true);
-        console.log(place.icon);
-        
+
+        var geocoder = new google.maps.Geocoder();
+            geocoder.geocode( { "address": origin.value}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    var latOr = results[0].geometry.location.lat();
+                    var  longOr = results[0].geometry.location.lng();
+                    console.log(latOr, longOr);
+                } 
+        });
 
     });
 
@@ -139,7 +146,16 @@ function initialize() {
         }));
         marker.setPosition(place.geometry.location);
         marker.setVisible(true);
-        console.log(place.geometry.location);
+        
+        var geocoder = new google.maps.Geocoder();
+            geocoder.geocode( { "address": destination.value}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    var latDes = results[0].geometry.location.lat();
+                    var  longDes = results[0].geometry.location.lng();
+                    console.log(latDes, longDes);
+                } 
+        });
+
         var request = {
             origin: origin.value,
             destination: destination.value,
