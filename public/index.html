@@ -81,71 +81,15 @@
   </div>
   <!-- Ride types -->
   <div id="signup-ride" class="inputbox text-center">
-    <div class="white pad">
+    <div class="white pad" id="calculate">
       <span class="label-input typeride">Available ride types</span>
-      <hr class="sep">
-      <div class="row">
-        <div class="car image">
-          <img src="img/lyft-line.png" alt="">
-        </div>
-        <div class="content text-left">
-          <p class="title">Line</p>
-          <span class="status">Shared, 2 riders max</span>
-        </div>
-        <div class="prices text-right">
-          <span class="price">$4-6</span>
-          <i class="fa fa-info-circle info" aria-hidden="true" data-toggle="modal" data-target="#lyftLine"></i>
-        </div>
-      </div>
-      <hr class="sep">
-      <div class="row">
-        <div class="car image">
-          <img src="img/lyft-car.png" alt="">
-        </div>
-        <div class="content text-left">
-          <p class="title">Lyft</p>
-          <span class="status">4 seats</span>
-        </div>
-        <div class="prices text-right">
-          <span class="price">$7-9</span>
-          <i class="fa fa-info-circle info" aria-hidden="true" data-toggle="modal" data-target="#lyftRide"></i>
-        </div>
-      </div>
-      <hr class="sep">
-      <div class="row">
-        <div class="car image">
-          <img src="img/lyft-plus.png" alt="">
-        </div>
-        <div class="content text-left">
-          <p class="title">Plus</p>
-          <span class="status">6 seats</span>
-        </div>
-        <div class="prices text-right">
-          <span class="price">$14-16</span>
-          <i class="fa fa-info-circle info" aria-hidden="true"  data-toggle="modal" data-target="#plusRide"></i>
-        </div>
-      </div>
-      <hr class="sep">
-      <div class="row">
-        <div class="car image">
-          <img src="img/premier.png" alt="">
-        </div>
-        <div class="content text-left">
-          <p class="title">Premier</p>
-          <span class="status">High-end, 4 seats</span>
-        </div>
-        <div class="prices text-right">
-          <span class="price">$18-20</span>
-          <i class="fa fa-info-circle info" aria-hidden="true" data-toggle="modal" data-target="#premierRide" ></i>
-        </div>
-      </div>
     </div>
     <button type="submit" class="buttons" id="button-signupride">Sign up and ride</button>
   </div>
   </div>
   <!-- MODALS -->
   <!-- Modal 1-->
-  <div class="modal fade" tabindex="-1" role="dialog" id="lyftLine">
+  <div class="modal fade" tabindex="-1" role="dialog" id="1">
     '<div class="modal-dialog" role="document">
         <div class="modal-body text-center">
           <div class="modal-1">
@@ -165,7 +109,7 @@
     </div>
   </div><!-- /.modal -->
   <!-- Modal 2-->
-  <div class="modal fade" tabindex="-1" role="dialog" id="lyftRide">
+  <div class="modal fade" tabindex="-1" role="dialog" id="2">
     '<div class="modal-dialog" role="document">
         <div class="modal-body text-center">
           <div class="modal-1">
@@ -197,7 +141,7 @@
     </div>
   </div><!-- /.modal -->
   <!-- Modal 3-->
-  <div class="modal fade" tabindex="-1" role="dialog" id="plusRide">
+  <div class="modal fade" tabindex="-1" role="dialog" id="3">
     '<div class="modal-dialog" role="document">
         <div class="modal-body text-center">
           <div class="modal-1">
@@ -229,7 +173,7 @@
     </div>
   </div><!-- /.modal -->
   <!-- Modal 4-->
-  <div class="modal fade" tabindex="-1" role="dialog" id="premierRide">
+  <div class="modal fade" tabindex="-1" role="dialog" id="4">
     '<div class="modal-dialog" role="document">
         <div class="modal-body text-center">
           <div class="modal-1">
@@ -261,7 +205,7 @@
     </div>
   </div><!-- /.modal -->
 <!-- Scripts -->
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxs4gqYhr1Tenuhz_KzfcpxHaOnfZE8m8&libraries=places"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4uAvzNTBk-4v0syI13ke6-nZ1vLjuQ2E&libraries=places"></script>
   <script src="//code.jquery.com/jquery-2.2.4.min.js" crossorigin="anonymous"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <script src="//use.fontawesome.com/a4f2ba36c5.js"></script>
