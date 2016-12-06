@@ -48,7 +48,7 @@ function cargarPagina() {
         center: myLatlng,
         mapTypeControl: false,
         streetViewControl: false,
-        mapTypeId: google.maps.MapTypeId.TERRAIN
+        mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     map = new google.maps.Map(map, myOptions);
 
