@@ -16,14 +16,29 @@ var latOr;
 var longOr;
 var latDes;
 var longDes;
-var access_token = null;
+var access_token = "gAAAAABYRy6WdpdDRDzBado0QL4XhC3hBBAFzypCYCQUMRYLWSSomzs4Fw6dVTj9AnMCmP2LB8vj4apnu2HBtUfHCIhglfPcLVISIkmRRGa6yL5YwvovdkxvIObmONhG8S8L-_cStnls9-MBjjtp8e2B_53e-xmkHxD69sXzhzDKQSlGTWC3zThobBb_FltN3tZ1W9eXRSSfjjjrnYmsJRLvCw8E4VpJjA==";
+
+var template = '<hr class="sep">' +
+               '<div class="row">' +
+                    '<div class="car image">' +
+                        '<img src="{{image}}" alt="">' +
+                    '</div>' +
+                    '<div class="content text-left">' +
+                        '<p class="title">{{type}}</p>' +
+                        '<span class="status">{{text}}</span>' +
+                    '</div>' +
+                    '<div class="prices text-right">' +
+                        '<span class="price">${{min}}-{{max}}</span>' +
+                        '<i class="fa fa-info-circle info" aria-hidden="true" data-toggle="modal" data-target="{{id}}"></i>' +
+                    '</div>' +
+                '</div>';
 
 function cargarPagina() {
 
-    var clientId = 'ydgWzNZ4qVrS';
-    var clientSecret = '04gYKvHBfWi_HS7uuiERZqBiH9V_YWBd';
+    var clientId = 'NIR2JfxWyaiW';
+    var clientSecret = 'xqIMb-QVcQJWCJE5KMmGcAeofJYA5PgZ';
 
-    $.ajax({
+    /*$.ajax({
       url: 'https://api.lyft.com/oauth/token',
       type: 'POST',
       data: {
@@ -34,13 +49,13 @@ function cargarPagina() {
         xhr.setRequestHeader ("Authorization", "Basic " + btoa(clientId + ":" + clientSecret));
       },
       success: function(response) {
-        access_token = response.access_token;
+        access_token = "gAAAAABYRy6WdpdDRDzBado0QL4XhC3hBBAFzypCYCQUMRYLWSSomzs4Fw6dVTj9AnMCmP2LB8vj4apnu2HBtUfHCIhglfPcLVISIkmRRGa6yL5YwvovdkxvIObmONhG8S8L-_cStnls9-MBjjtp8e2B_53e-xmkHxD69sXzhzDKQSlGTWC3zThobBb_FltN3tZ1W9eXRSSfjjjrnYmsJRLvCw8E4VpJjA==";
         console.log(access_token);
       },
       error: function(error) {
         console.log(error);
       }
-    });
+    });*/
 
     var myLatlng = new google.maps.LatLng(37.7749300, -122.4194200);
     var myOptions = {
@@ -73,6 +88,32 @@ function getAjax(e) {
       },
       success: function(response) {
         console.log(response);
+        var image;
+        var text;
+        $.each(response.cost_estimates, function(i, costes) {
+            if (costes.ride_type === "lyft_plus") {
+                image = "lyft-plus.png";
+                text = "6 seats";
+            }
+            if (costes.ride_type === "lyft_line") {
+                image = "lyft-line.png";
+                text = "Shared, 2 riders max";
+            }
+            if (costes.ride_type === "lyft") {
+                image = "lyft-car.png";
+                text = "4 seats";
+            }
+            if (costes.ride_type === "lyft_premier") {
+                text = "High-end,4 seats";
+                image = "premier.png";
+            }
+            $("#calculate").append(template.replace("{{type}}", costes.display_name)
+                                           .replace("{{min}}", (costes.estimated_cost_cents_min/100))
+                                           .replace("{{max}}", (costes.estimated_cost_cents_max/100))
+                                           .replace("{{image}}", "img/" + image)
+                                           .replace("{{text}}", text)
+                                           .replace("{{id}}", "#" + i+1));
+        });
       },
       error: function(error) {
         console.log(error);
@@ -175,16 +216,16 @@ function initialize() {
         
         };
 
-    directionsService.route(request, function(response, status) {
-        if (status == google.maps.DirectionsStatus.OK) {
-            directionsRenderer.setMap(map);
-            directionsRenderer.setDirections(response);
-            directionsRenderer.setOptions( { suppressMarkers: true } );
-        } else {
-            alert("Destination is outside of service area");
-        }
+        directionsService.route(request, function(response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                directionsRenderer.setMap(map);
+                directionsRenderer.setDirections(response);
+                directionsRenderer.setOptions( { suppressMarkers: true } );
+            } else {
+                alert("Destination is outside of service area");
+            }
 
-    });
+        });
     });
 
 
