@@ -95,6 +95,9 @@ nav {
 #estimate-fare hr {
   margin: 0px !important;
 }
+#estimate-fare .est {
+  margin: 20px;
+}
 #signup-ride {
   position: absolute;
   top: 220px;
@@ -106,7 +109,7 @@ nav {
   padding: 20px;
 }
 #signup-ride .white .sep {
-  margin: 20px 0px !important;
+  margin: 10px 0px !important;
 }
 #signup-ride .white .image img {
   width: 80%;
