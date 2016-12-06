@@ -92,6 +92,9 @@ nav {
   left: 20px;
   z-index: 2 !important;
 }
+#estimate-fare hr {
+  margin: 0px !important;
+}
 #signup-ride {
   position: absolute;
   top: 220px;
@@ -102,8 +105,8 @@ nav {
 #signup-ride .white {
   padding: 20px;
 }
-#signup-ride .white hr {
-  margin: 0px;
+#signup-ride .white .sep {
+  margin: 20px 0px !important;
 }
 #signup-ride .white .image img {
   width: 80%;
@@ -142,6 +145,7 @@ nav {
 }
 #signup-ride .white .prices i {
   color: #212121;
+  cursor: pointer;
 }
 .inputbox {
   width: 320px;
@@ -167,13 +171,13 @@ nav {
   border-radius: 10px;
   margin-bottom: 10px;
 }
+.inputbox .white .typeride {
+  margin-bottom: 10px;
+}
 .inputbox .white .label-input {
   color: #ff00bf;
   text-transform: uppercase;
   font-weight: bolder;
-}
-.inputbox .white .label-input:focus {
-  outline: 0 !important;
 }
 .inputbox .white .route-input {
   display: block;
@@ -182,9 +186,6 @@ nav {
 }
 .inputbox .white .route-input:focus {
   outline: 0 !important;
-}
-.inputbox .white hr {
-  margin: 10px 0px;
 }
 .inputbox .white .circles {
   font-size: 10px;

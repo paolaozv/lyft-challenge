@@ -11,6 +11,8 @@
   top 80px
   left 20px
   z-index 2 !important
+  hr
+    margin 0px !important
 
 #signup-ride
   position absolute
@@ -20,8 +22,8 @@
   display none
   .white
     padding 20px
-    hr
-      margin 0px
+    .sep
+      margin 20px 0px !important
     .image
       img
         width 80%
@@ -52,11 +54,11 @@
       padding-right 10px
       i
         color $gray
+        cursor pointer
 
 
 .inputbox
   width 320px
-
   .buttons
     background-color $pink
     width 320px
@@ -76,20 +78,18 @@
     box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.3);
     border-radius 10px
     margin-bottom 10px
+    .typeride
+      margin-bottom 10px
     .label-input
       color $pink
       text-transform uppercase
       font-weight bolder
-      &:focus
-        outline 0 !important
     .route-input
       display block
       border none
       width 90%
       &:focus
         outline 0 !important
-    hr
-      margin 10px 0px
     .circles
       font-size 10px
       margin-left 20px

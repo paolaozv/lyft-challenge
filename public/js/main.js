@@ -16,7 +16,7 @@ var latDes;
 var longDes;
 var desLatlon;
 var origLatlon;
-var token = null;
+var access_token = null;
 
 function cargarPagina() {
 
@@ -34,8 +34,8 @@ function cargarPagina() {
         xhr.setRequestHeader ("Authorization", "Basic " + btoa(clientId + ":" + clientSecret));
       },
       success: function(response) {
-        token = response;
-        console.log(token);
+        access_token = response.access_token;
+        console.log(access_token);
       },
       error: function(error) {
         console.log(error);
@@ -67,28 +67,6 @@ function travelToAddress(e) {
         provideRouteAlternatives: true
     };
 
-    directionsService.route(request, function(response, status) {
-        if (status == google.maps.DirectionsStatus.OK) {
-            directionsRenderer.setMap(map);
-            directionsRenderer.setDirections(response);
-            directionsRenderer.setOptions( { suppressMarkers: true } );
-            var pinOrig = '../img/map-pin-blue.png';
-            var marker = new google.maps.Marker({
-                position: origLatlon,
-                map: map,
-                icon: pinOrig
-            });
-            var pinDes = '../img/map-pin-pink.png';
-            var marker = new google.maps.Marker({
-                position: desLatlon,
-                map: map,
-                icon: pinDes
-            });
-        } else {
-            alert("Destination is outside of service area");
-        }
-    });
-
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({"address": origin.value}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
@@ -103,33 +81,53 @@ function travelToAddress(e) {
     var geocoderDes = new google.maps.Geocoder();
     geocoderDes.geocode({"address": destination.value}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
-            var latDes = results[0].geometry.location.lat();
-            var longDes = results[0].geometry.location.lng();
+            latDes = results[0].geometry.location.lat();
+            longDes = results[0].geometry.location.lng();
             desLatlon = new google.maps.LatLng(latDes, longDes);
             console.log(latDes, longDes);
             console.log(desLatlon);
         }
     });
 
-    $.ajax({
-      url: 'https://api.lyft.com/v1/cost',
-      type: 'GET',
-      data: {
-        start_lat: latOr,
-        start_lng: longOr,
-        end_lat: latDes,
-        end_lng: longDes
-      },
-      beforeSend: function (xhr) {
-        xhr.setRequestHeader ("Authorization: bearer" + token);
-      },
-      success: function(response) {
-        console.log(response);
-      },
-      error: function(error) {
-        console.log(error);
-      }
+    directionsService.route(request, function(response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+            directionsRenderer.setMap(map);
+            directionsRenderer.setDirections(response);
+            directionsRenderer.setOptions( { suppressMarkers: true } );
+            var pinOrig = '../img/map-pin-blue.png';
+            var marker = new google.maps.Marker({
+                position: origLatlon,
+                map: map,
+            });
+            var pinDes = '../img/map-pin-pink.png';
+            var marker = new google.maps.Marker({
+                position: desLatlon,
+                map: map,
+                icon: pinDes
+            });
+            $.ajax({
+              url: 'https://api.lyft.com/v1/cost',
+              data: {
+                start_lat: Number(latOr),
+                start_lng: Number(longOr),
+                end_lat: Number(latDes),
+                end_lng: Number(longDes)
+              },
+              beforeSend: function (xhr) {
+                xhr.setRequestHeader ("Authorization", "bearer " + access_token);
+              },
+              success: function(response) {
+                console.log(response);
+              },
+              error: function(error) {
+                console.log(error);
+              }
+            });
+        } else {
+            alert("Destination is outside of service area");
+        }
     });
+
 }
 
 function initialize() {
