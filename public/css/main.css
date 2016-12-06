@@ -254,6 +254,11 @@ nav {
 .bg-blur {
   -webkit-filter: blur(6px);
 }
+@media screen and (max-width: 425px) {
+  .modal-dialog {
+    margin: 10% auto !important;
+  }
+}
 .pac-icon {
   background-image: url("../img/icon.png") !important;
   background-size: 100%;
