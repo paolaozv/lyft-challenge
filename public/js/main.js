@@ -16,7 +16,7 @@ var directionsRenderer = new google.maps.DirectionsRenderer({
              strokeColor: "#352384"
     }
 });
-var access_token = "gAAAAABYRy6WdpdDRDzBado0QL4XhC3hBBAFzypCYCQUMRYLWSSomzs4Fw6dVTj9AnMCmP2LB8vj4apnu2HBtUfHCIhglfPcLVISIkmRRGa6yL5YwvovdkxvIObmONhG8S8L-_cStnls9-MBjjtp8e2B_53e-xmkHxD69sXzhzDKQSlGTWC3zThobBb_FltN3tZ1W9eXRSSfjjjrnYmsJRLvCw8E4VpJjA==";
+var access_token = "gAAAAABYSIIs75nsHenxaV3uCS8m-XfJ-VqlmYCiEoNSI9cLnpH4PcYWWDRTT541OlefRzA8lZ7OSMkiXeneOd17guoUVYVHbm8SAgPIi94RLv5tpWmusfdQuMPLWHZKDHUzYNSBegUJIDDEadnYVD2WoizFOpA_vCMfhbvKRezNVF9cyuGvTtnpbUlcd5i7LzpflUCshSObatJmD7xOHavTJ8qkn9rwaA==";
 
 var template = '<hr class="sep">' +
                '<div class="row">' +
@@ -34,6 +34,19 @@ var template = '<hr class="sep">' +
                 '</div>';
 
 var loadPage = function() {
+   /* var database = firebase.database();
+
+    function writeData(database, token) {
+        database.ref("tokens/").set(token);
+        console.log("Token saved");
+    }
+
+    var createAt = new Date();
+    writeData(database, {
+        token: "gAAAAABYSIIs75nsHenxaV3uCS8m-XfJ-VqlmYCiEoNSI9cLnpH4PcYWWDRTT541OlefRzA8lZ7OSMkiXeneOd17guoUVYVHbm8SAgPIi94RLv5tpWmusfdQuMPLWHZKDHUzYNSBegUJIDDEadnYVD2WoizFOpA_vCMfhbvKRezNVF9cyuGvTtnpbUlcd5i7LzpflUCshSObatJmD7xOHavTJ8qkn9rwaA==",
+        expires_in: 86400
+    });*/
+
     var clientId = 'NIR2JfxWyaiW';
     var clientSecret = 'xqIMb-QVcQJWCJE5KMmGcAeofJYA5PgZ';
     /*window.location.href = "index.html" + "?dl=true";*/
@@ -77,6 +90,8 @@ var loadPage = function() {
     $('#button-getestimate').click(validate);
     $("#origin").click(hideCard);
     /*$(".downpop").click(redirect);*/
+    $("#signup-ride").click(hideCalculate);
+    $("#button-signupride").click(redirectLyft);
 };
 
 $(document).ready(loadPage);
@@ -271,4 +286,13 @@ var hideCard = function() {
     $("#destination").val("");
     $('#signup-ride').removeClass("showRides");
     $('#button-getestimate').removeClass("hideButton");
+    $("#calculate").empty();
+};
+
+var hideCalculate = function() {
+    $("#signup-ride").removeClass("showRides");
+};
+
+var redirectLyft = function() {
+    window.open("https://www.lyft.com/signup", "_blank");
 };

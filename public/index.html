@@ -33,9 +33,9 @@
             <ul class="dropdown-menu">
               <li><a href="#">Action 1</a></li>
               <li role="separator" class="divider"></li>
-              <li><a href="#">Action 2</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="#">Action 3</a></li>
+             <li><a href="#">Action 2</a></li>
+             <li role="separator" class="divider"></li>
+             <li><a href="#">Action 3</a></li>
             </ul>
           </li>
         </ul>
@@ -84,10 +84,11 @@
   </div>
   <!-- Ride types -->
   <div id="signup-ride" class="inputbox text-center">
-    <div class="white pad" id="calculate">
+    <div class="white pad">
       <span class="label-input typeride">Available ride types</span>
+      <div id="calculate"></div>
     </div>
-    <button class="buttons" id="button-signupride"><a class="sign" href="https://www.lyft.com/signup">Sign up and ride</a></button>
+    <button class="buttons" id="button-signupride">Sign up and ride</button>
   </div>
   </div>
   <!-- MODALS -->
@@ -231,6 +232,18 @@
   <script src="//code.jquery.com/jquery-2.2.4.min.js" crossorigin="anonymous"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <script src="//use.fontawesome.com/a4f2ba36c5.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.6.3/firebase.js"></script>
+	<!-- <script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyBFlbSwgkGSPrFaHU--6Wu-zhAdqvBoTrA",
+	    authDomain: "lyft-challenge-a9a34.firebaseapp.com",
+	    databaseURL: "https://lyft-challenge-a9a34.firebaseio.com",
+	    storageBucket: "lyft-challenge-a9a34.appspot.com",
+	    messagingSenderId: "920469509568"
+	  };
+	  firebase.initializeApp(config);
+	</script> -->
   <script src="js/main.js"></script>
   <script src="js/input.js"></script>
 </body>
