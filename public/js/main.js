@@ -34,7 +34,7 @@ var template = '<hr class="sep">' +
                 '</div>';
 
 var loadPage = function() {
-    var database = firebase.database();
+   /* var database = firebase.database();
 
     function writeData(database, token) {
         database.ref("tokens/").set(token);
@@ -45,7 +45,7 @@ var loadPage = function() {
     writeData(database, {
         token: "gAAAAABYSIIs75nsHenxaV3uCS8m-XfJ-VqlmYCiEoNSI9cLnpH4PcYWWDRTT541OlefRzA8lZ7OSMkiXeneOd17guoUVYVHbm8SAgPIi94RLv5tpWmusfdQuMPLWHZKDHUzYNSBegUJIDDEadnYVD2WoizFOpA_vCMfhbvKRezNVF9cyuGvTtnpbUlcd5i7LzpflUCshSObatJmD7xOHavTJ8qkn9rwaA==",
         expires_in: 86400
-    });
+    });*/
 
     var clientId = 'NIR2JfxWyaiW';
     var clientSecret = 'xqIMb-QVcQJWCJE5KMmGcAeofJYA5PgZ';
