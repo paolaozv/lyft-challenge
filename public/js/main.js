@@ -90,7 +90,6 @@ var loadPage = function() {
     $('#button-getestimate').click(validate);
     $("#origin").click(hideCard);
     /*$(".downpop").click(redirect);*/
-    $("#signup-ride").click(hideCalculate);
     $("#button-signupride").click(redirectLyft);
 };
 
@@ -287,10 +286,6 @@ var hideCard = function() {
     $('#signup-ride').removeClass("showRides");
     $('#button-getestimate').removeClass("hideButton");
     $("#calculate").empty();
-};
-
-var hideCalculate = function() {
-    $("#signup-ride").removeClass("showRides");
 };
 
 var redirectLyft = function() {
