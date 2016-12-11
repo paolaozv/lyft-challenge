@@ -16,7 +16,9 @@ var directionsRenderer = new google.maps.DirectionsRenderer({
              strokeColor: "#352384"
     }
 });
-var access_token = "gAAAAABYSIIs75nsHenxaV3uCS8m-XfJ-VqlmYCiEoNSI9cLnpH4PcYWWDRTT541OlefRzA8lZ7OSMkiXeneOd17guoUVYVHbm8SAgPIi94RLv5tpWmusfdQuMPLWHZKDHUzYNSBegUJIDDEadnYVD2WoizFOpA_vCMfhbvKRezNVF9cyuGvTtnpbUlcd5i7LzpflUCshSObatJmD7xOHavTJ8qkn9rwaA==";
+var access_token = "gAAAAABYTdF2axLqXGtqyy2awYP-myStZySNC8rJ0P1iwGLDCRBB_ysJXQTYyTzdQvNoGLr0nuG0FW1HXhvQcYRNUst23p_uj-G53tZxNETnhfgEYOl-auxgZL9kMkyEqk-ks6fLE1x0M-DtBg41wctJeAXzOyNzPNbGeWvcHsS8xsHBCcUQQlx1FRVP3HKrK24wf9Kv767zJJMljVmUjDN_gJyHwcsEyg==";
+/*var access_token = access_token;
+var expires_in;*/
 
 var template = '<hr class="sep">' +
                '<div class="row">' +
@@ -33,22 +35,40 @@ var template = '<hr class="sep">' +
                     '</div>' +
                 '</div>';
 
+var tempModal = '<div class="modal fade" tabindex="-1" role="dialog" id="{{id}}">' +
+                    '<div class="modal-dialog" role="document">' +
+                        '<div class="modal-body text-center">' +
+                        '<div class="modal-1">' +
+                          '<span>{{type}}</span><br>' +
+                          '<img src="{{image}}"  class="image-car" alt="">' +
+                          '<p>{{modText}}</p>' + 
+                        '</div>' +
+                        '<div class="modal-2">' +
+                          '<div class="row">' +
+                            '<div class="col-xs-6 text-left">' +
+                              '<p>Seats</p>' +
+                              '<p>Minimum fare</p>' +
+                              '<p>Pickup</p>' +
+                              '<p>Per mile</p>' +
+                              '<p>Per minute</p>' +
+                            '</div>' +
+                            '<div class="col-xs-6 text-right">' +
+                              '<p>{{seats}}</p>' +
+                              '<p>${{min}}</p>' +
+                              '<p>${{pickup}}</p>' +
+                              '<p>${{mile}}</p>' +
+                              '<p>${{minute}}</p>' +
+                            '</div>' +
+                          '</div>' +
+                          '<p class="note">$1.75 Service fee added to all rides</p>' +
+                        '</div>' +
+                      '</div>' +
+                    '<p class="close-modal text-center" data-dismiss="modal">X</p>' +
+                  '</div>' +
+                '</div>';
+
 var loadPage = function() {
-   /* var database = firebase.database();
 
-    function writeData(database, token) {
-        database.ref("tokens/").set(token);
-        console.log("Token saved");
-    }
-
-    var createAt = new Date();
-    writeData(database, {
-        token: "gAAAAABYSIIs75nsHenxaV3uCS8m-XfJ-VqlmYCiEoNSI9cLnpH4PcYWWDRTT541OlefRzA8lZ7OSMkiXeneOd17guoUVYVHbm8SAgPIi94RLv5tpWmusfdQuMPLWHZKDHUzYNSBegUJIDDEadnYVD2WoizFOpA_vCMfhbvKRezNVF9cyuGvTtnpbUlcd5i7LzpflUCshSObatJmD7xOHavTJ8qkn9rwaA==",
-        expires_in: 86400
-    });*/
-
-    var clientId = 'NIR2JfxWyaiW';
-    var clientSecret = 'xqIMb-QVcQJWCJE5KMmGcAeofJYA5PgZ';
     /*window.location.href = "index.html" + "?dl=true";*/
 
    /* if (window.location.href = "index.html" + "?dl=true") {
@@ -57,24 +77,43 @@ var loadPage = function() {
         $("#popup").hide();
     }*/
 
-    /*$.ajax({
-      url: 'https://api.lyft.com/oauth/token',
-      type: 'POST',
-      data: {
-        grant_type: 'client_credentials',
-        scope: 'public'
-      },
-      beforeSend: function (xhr) {
-        xhr.setRequestHeader ("Authorization", "Basic " + btoa(clientId + ":" + clientSecret));
-      },
-      success: function(response) {
-        access_token = "gAAAAABYRy6WdpdDRDzBado0QL4XhC3hBBAFzypCYCQUMRYLWSSomzs4Fw6dVTj9AnMCmP2LB8vj4apnu2HBtUfHCIhglfPcLVISIkmRRGa6yL5YwvovdkxvIObmONhG8S8L-_cStnls9-MBjjtp8e2B_53e-xmkHxD69sXzhzDKQSlGTWC3zThobBb_FltN3tZ1W9eXRSSfjjjrnYmsJRLvCw8E4VpJjA==";
-        console.log(access_token);
-      },
-      error: function(error) {
-        console.log(error);
-      }
-    });*/
+    var clientId = 'NIR2JfxWyaiW';
+    var clientSecret = 'xqIMb-QVcQJWCJE5KMmGcAeofJYA5PgZ';
+
+    /*var database = firebase.database();
+
+    function writeData(database, token) {
+        database.ref("tokens/").set(token);
+        console.log("Token saved");
+    }
+
+    var createAt = new Date();
+    writeData(database, {
+        token: access_token,
+        expires_in: createAt.getTime()
+    });
+
+    if (createAt.getTime() >= expires_in + 86400000) {
+        $.ajax({
+            url: 'https://api.lyft.com/oauth/token',
+            type: 'POST',
+            data: {
+              grant_type: 'client_credentials',
+              scope: 'public'
+            },
+            beforeSend: function (xhr) {
+              xhr.setRequestHeader ("Authorization", "Basic " + btoa(clientId + ":" + clientSecret));
+            },
+            success: function(response) {
+              access_token = response.access_token;
+              console.log(access_token);
+            },
+            error: function(error) {
+              console.log(error);
+            }
+        });
+    }*/
+    
 
     var myLatlng = new google.maps.LatLng(37.7749300, -122.4194200);
     var myOptions = {
@@ -117,22 +156,37 @@ var getAjax = function(e) {
         console.log(response);
         var image;
         var text;
+        var modText;
+        var seats;
+        var pickup;
         $.each(response.cost_estimates, function(i, costes) {
             if (costes.ride_type === "lyft_plus") {
                 image = "lyft-plus.png";
                 text = "6 seats";
+                modText = "A supersized ride when you need more space. Fits up to 6 people.";
+                seats = "6";
+                pickup = "2.00";
             }
             if (costes.ride_type === "lyft_line") {
                 image = "lyft-line.png";
                 text = "Shared, 2 riders max";
+                modText = "Lyft Line matches you with others travelling the same way.";
+                seats = "1";
+                pickup = "2.00";
             }
             if (costes.ride_type === "lyft") {
                 image = "lyft-car.png";
                 text = "4 seats";
+                modText = "A personal ride for when you need to get to your destination fast. Fits up to 4 people.";
+                seats = "4";
+                pickup = "3.00";
             }
             if (costes.ride_type === "lyft_premier") {
                 text = "High-end,4 seats";
                 image = "premier.png";
+                modText = "A high-end car whit leather seats and a comfortable interior so you can arrive eith style.";
+                seats = "4";
+                pickup = "5.00";
             }
             $("#calculate").append(template.replace("{{type}}", costes.display_name)
                                            .replace("{{min}}", (costes.estimated_cost_cents_min/100))
@@ -140,6 +194,15 @@ var getAjax = function(e) {
                                            .replace("{{image}}", "img/" + image)
                                            .replace("{{text}}", text)
                                            .replace("{{id}}", "#" + parseInt(i+1)));
+            $("#modal").append(tempModal.replace("{{type}}", costes.display_name)
+                                       .replace("{{min}}", (costes.estimated_cost_cents_min/100))
+                                       .replace("{{mile}}", ((costes.estimated_cost_cents_min/costes.estimated_distance_miles)/100).toFixed(2))
+                                       .replace("{{minute}}", ((60*costes.estimated_cost_cents_min/costes.estimated_duration_seconds)/100).toFixed(2))
+                                       .replace("{{image}}", "img/" + image)
+                                       .replace("{{modText}}", modText)
+                                       .replace("{{seats}}", seats)
+                                       .replace("{{pickup}}", pickup)
+                                       .replace("{{id}}", parseInt(i+1)));
         });
       },
       error: function(error) {
