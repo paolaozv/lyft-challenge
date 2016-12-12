@@ -349,6 +349,7 @@ var hideCard = function() {
     $('#signup-ride').removeClass("showRides");
     $('#button-getestimate').removeClass("hideButton");
     $("#calculate").empty();
+    $("#modal").empty();
 };
 
 var redirectLyft = function() {
