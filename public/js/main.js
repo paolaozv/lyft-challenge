@@ -1,4 +1,5 @@
 // variables
+var accessToken;
 var markerOr;
 var marker;
 var latOr;
@@ -16,9 +17,6 @@ var directionsRenderer = new google.maps.DirectionsRenderer({
              strokeColor: "#352384"
     }
 });
-var access_token = "gAAAAABYTdF2axLqXGtqyy2awYP-myStZySNC8rJ0P1iwGLDCRBB_ysJXQTYyTzdQvNoGLr0nuG0FW1HXhvQcYRNUst23p_uj-G53tZxNETnhfgEYOl-auxgZL9kMkyEqk-ks6fLE1x0M-DtBg41wctJeAXzOyNzPNbGeWvcHsS8xsHBCcUQQlx1FRVP3HKrK24wf9Kv767zJJMljVmUjDN_gJyHwcsEyg==";
-/*var access_token = access_token;
-var expires_in;*/
 
 var template = '<hr class="sep">' +
                '<div class="row">' +
@@ -67,6 +65,56 @@ var tempModal = '<div class="modal fade" tabindex="-1" role="dialog" id="{{id}}"
                   '</div>' +
                 '</div>';
 
+var clientId = 'NIR2JfxWyaiW';
+var clientSecret = 'xqIMb-QVcQJWCJE5KMmGcAeofJYA5PgZ';
+var database = firebase.database();
+
+var useToken = function (data) {
+  var token = data.val();
+  if (token == null) {
+    requestToken();  
+  } else {
+    // TO DO ... verificar fecha y usar token
+    var savedTimestamp = token.created_at;
+    var savedExpiration = token.expires_in;
+    var currentTimestamp = new Date().getTime();
+    if (currentTimestamp > savedTimestamp + (savedExpiration * 1000)) {
+      requestToken();
+    } else {
+      accessToken = token.token;
+    }
+  }
+};
+
+var requestToken = function () {
+  $.ajax({
+    url: 'https://api.lyft.com/oauth/token',
+    type: 'POST',
+    data: {
+      grant_type: 'client_credentials',
+      scope: 'public'
+    },
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader ("Authorization", "Basic " + btoa(clientId + ":" + clientSecret));
+    },
+    success: function(response) {
+      accessToken = response.access_token;
+      writeDataToFirebase(database, {
+        token: accessToken,
+        expires_in: response.expires_in,
+        created_at: new Date().getTime()
+      });
+    },
+    error: function(error) {
+      console.log(error);
+    }
+  });
+};
+
+var writeDataToFirebase = function (database, data) {
+  database.ref("tokens/").set(data);
+};
+
 var loadPage = function() {
 
     /*window.location.href = "index.html" + "?dl=true";*/
@@ -77,43 +125,10 @@ var loadPage = function() {
         $("#popup").hide();
     }*/
 
-    var clientId = 'NIR2JfxWyaiW';
-    var clientSecret = 'xqIMb-QVcQJWCJE5KMmGcAeofJYA5PgZ';
 
-    /*var database = firebase.database();
+    var tokens = database.ref("tokens/");
 
-    function writeData(database, token) {
-        database.ref("tokens/").set(token);
-        console.log("Token saved");
-    }
-
-    var createAt = new Date();
-    writeData(database, {
-        token: access_token,
-        expires_in: createAt.getTime()
-    });
-
-    if (createAt.getTime() >= expires_in + 86400000) {
-        $.ajax({
-            url: 'https://api.lyft.com/oauth/token',
-            type: 'POST',
-            data: {
-              grant_type: 'client_credentials',
-              scope: 'public'
-            },
-            beforeSend: function (xhr) {
-              xhr.setRequestHeader ("Authorization", "Basic " + btoa(clientId + ":" + clientSecret));
-            },
-            success: function(response) {
-              access_token = response.access_token;
-              console.log(access_token);
-            },
-            error: function(error) {
-              console.log(error);
-            }
-        });
-    }*/
-    
+    tokens.on('value', useToken);
 
     var myLatlng = new google.maps.LatLng(37.7749300, -122.4194200);
     var myOptions = {
@@ -150,7 +165,7 @@ var getAjax = function(e) {
         end_lng: Number(longDes)
       },
       beforeSend: function (xhr) {
-        xhr.setRequestHeader ("Authorization", "bearer " + access_token);
+        xhr.setRequestHeader ("Authorization", "bearer " + accessToken);
       },
       success: function(response) {
         console.log(response);
@@ -158,7 +173,7 @@ var getAjax = function(e) {
         var text;
         var modText;
         var seats;
-        var pickup;
+        var accessToken;
         $.each(response.cost_estimates, function(i, costes) {
             if (costes.ride_type === "lyft_plus") {
                 image = "lyft-plus.png";
@@ -312,7 +327,7 @@ var initialize = function() {
                 directionsRenderer.setDirections(response);
                 directionsRenderer.setOptions( { suppressMarkers: true } );
             } else {
-                alert("Destination is outside of service area");
+                alert("Lyft is not yet available in this region.");
             }
 
         });
