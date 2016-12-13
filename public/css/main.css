@@ -92,27 +92,26 @@ nav {
   padding-bottom: 5px;
   margin-top: 5px;
 }
-@media only screen and (max-width: 550px) {
-  .navbar-brand img {
-    margin-left: 7rem;
+@media (max-width: 767px) {
+  .navbar-brand {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
-  .drive-res {
-    border: none;
+  .navbar-default .navbar-collapse,
+  .navbar-default .navbar-form {
+    border-color: #fff !important;
   }
-  .sign {
-    display: none;
+  .navbar-nav {
+    background-color: #fff;
+    margin: -0.2rem -2rem 0 -2rem;
   }
-  .custom {
-    display: block;
-    font-weight: bold;
-    text-align: right;
-    padding: 19px;
-    color: #ff00bf;
-    font-size: 1em !important;
+  .navbar-default .navbar-nav>li>a:hover {
+    border-color: #fff;
   }
-  a:hover {
-    color: #ff00bf;
-    text-decoration: none;
+  .navbar-default .navbar-nav>li>a {
+    border-color: #fff;
   }
 }
 .navbar {

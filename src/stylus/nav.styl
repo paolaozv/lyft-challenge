@@ -55,7 +55,7 @@ nav
       padding-top 5px
       padding-bottom 5px
       margin-top 5px
-  
+/*
 @media only screen and (max-width : 550px)
   .navbar-brand
     img 
@@ -75,4 +75,20 @@ nav
   a:hover
     color $pink
     text-decoration none
+*/ 
+@media (max-width: 767px)
+  .navbar-brand 
+    position absolute
+    left 50%
+    top 50%
+    transform translate(-50%, -50%)
     
+  .navbar-default .navbar-collapse, .navbar-default .navbar-form
+    border-color #FFF !important
+  .navbar-nav 
+    background-color #FFF
+    margin -0.2rem -2rem 0 -2rem
+  .navbar-default .navbar-nav>li>a:hover
+    border-color #FFF
+  .navbar-default .navbar-nav>li>a
+    border-color #FFF
