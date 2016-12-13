@@ -1,6 +1,7 @@
 .navbar-brand
   img
     width 4rem
+
 .btn
   padding 0 1rem
   color #89898D
@@ -18,7 +19,7 @@ nav
   -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.3);
   -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.3);
   box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.3);
-  z-index 2
+  z-index 3
 
 .navbar
   border-radius 0
@@ -34,12 +35,15 @@ nav
   color $pink
   font-weight bold
   font-size 1em !important
+
 .custom
   display none
+
 .navbar-toggle
   .collapsed
     position relative
     left 0
+
 .navbar-toggle
   float left
   margin-left 15px
@@ -55,17 +59,19 @@ nav
       padding-top 5px
       padding-bottom 5px
       margin-top 5px
-.navbar-default .navbar-collapse
-    border-color #FFF
 
-@media only screen and (min-width: 341px) and (max-width: 512px)
+/*
+@media only screen and (max-width : 550px)
   .navbar-brand
     img
-      margin-left 6rem
+      margin-left 7rem
+
   .drive-res
     border none
+
   .sign
     display none
+
   .custom
     display block
     font-weight bold
@@ -73,15 +79,28 @@ nav
     padding 19px
     color $pink
     font-size 1em !important
-    font-family Gotham Bold
 
   a:hover
     color $pink
     text-decoration none
-.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover,.navbar-default .navbar-toggle
-  background-color transparent
-  border none
-.navbar-default .navbar-collapse
-  background-color #fff
-div#bs-example-navbar-collapse-1
-  padding-top 10px
+*/
+
+@media (max-width: 767px)
+  .navbar-brand
+    position absolute
+    left 50%
+    top 50%
+    transform translate(-50%, -50%)
+
+  .navbar-default .navbar-collapse, .navbar-default .navbar-form
+    border-color #FFF !important
+
+  .navbar-nav
+    background-color #FFF
+    margin -0.2rem -2rem 0 -2rem
+
+  .navbar-default .navbar-nav>li>a:hover
+    border-color #FFF
+
+  .navbar-default .navbar-nav>li>a
+    border-color #FFF

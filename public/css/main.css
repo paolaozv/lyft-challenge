@@ -54,7 +54,7 @@ nav {
   -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.3);
   -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.3);
   box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.3);
-  z-index: 2;
+  z-index: 3;
 }
 .navbar {
   border-radius: 0;
@@ -92,44 +92,27 @@ nav {
   padding-bottom: 5px;
   margin-top: 5px;
 }
-.navbar-default .navbar-collapse {
-  border-color: #fff;
-}
-@media only screen and (min-width: 341px) and (max-width: 512px) {
-  .navbar-brand img {
-    margin-left: 6rem;
+@media (max-width: 767px) {
+  .navbar-brand {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
-  .drive-res {
-    border: none;
+  .navbar-default .navbar-collapse,
+  .navbar-default .navbar-form {
+    border-color: #fff !important;
   }
-  .sign {
-    display: none;
+  .navbar-nav {
+    background-color: #fff;
+    margin: -0.2rem -2rem 0 -2rem;
   }
-  .custom {
-    display: block;
-    font-weight: bold;
-    text-align: right;
-    padding: 19px;
-    color: #ff00bf;
-    font-size: 1em !important;
-    font-family: Gotham Bold;
+  .navbar-default .navbar-nav>li>a:hover {
+    border-color: #fff;
   }
-  a:hover {
-    color: #ff00bf;
-    text-decoration: none;
+  .navbar-default .navbar-nav>li>a {
+    border-color: #fff;
   }
-}
-.navbar-default .navbar-toggle:focus,
-.navbar-default .navbar-toggle:hover,
-.navbar-default .navbar-toggle {
-  background-color: transparent;
-  border: none;
-}
-.navbar-default .navbar-collapse {
-  background-color: #fff;
-}
-div#bs-example-navbar-collapse-1 {
-  padding-top: 10px;
 }
 .navbar {
   height: 10vh;
