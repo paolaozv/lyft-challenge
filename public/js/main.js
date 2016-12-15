@@ -6,6 +6,7 @@ var latOr;
 var longOr;
 var latDes;
 var longDes;
+var latLon;
 
 var button = document.getElementById("button-getestimate");
 var origin = document.getElementById("origin");
@@ -141,7 +142,11 @@ var loadPage = function() {
 
     tokens.on('value', useToken);
 
-    var myLatlng = new google.maps.LatLng(37.7749300, -122.4194200);
+    if (navigator && navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, error);
+    }
+
+    /*var myLatlng = new google.maps.LatLng(37.7749300, -122.4194200);
     var myOptions = {
         zoom: 9,
         center: myLatlng,
@@ -149,7 +154,7 @@ var loadPage = function() {
         streetViewControl: false,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    map = new google.maps.Map(map, myOptions);
+    map = new google.maps.Map(map, myOptions);*/
 
     $('#button-getestimate').click(getAjax);
     $('#button-getestimate').click(validate);
@@ -160,6 +165,26 @@ var loadPage = function() {
 };
 
 $(document).ready(loadPage);
+
+var success = function(position) {
+    showMap(position.coords.latitude, position.coords.longitude);
+};
+
+var error = function(error) {
+    console.log(error);
+};
+
+var showMap = function(lat, lon) {
+    latLon = new google.maps.LatLng(lat, lon);
+    var myOptions = {
+        zoom: 13,
+        center: latLon,
+        mapTypeControl: false,
+        streetViewControl: false,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(map, myOptions);
+};
 
 var getAjax = function(e) {
     e.preventDefault();
