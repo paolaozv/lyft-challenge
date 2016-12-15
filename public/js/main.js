@@ -65,6 +65,26 @@ var tempModal = '<div class="modal fade" tabindex="-1" role="dialog" id="{{id}}"
                   '</div>' +
                 '</div>';
 
+var tempLine = '<div class="modal fade" tabindex="-1" role="dialog" id="2">' +
+                '<div class="modal-dialog" role="document">' +
+                    '<div class="modal-body text-center">' +
+                      '<div class="modal-1">' +
+                        '<b>Lyft Line</b><br><span>$4 - 6</span><br>' +
+                        '<img src="img/lyft-match.png"  class="image-car" alt="">' +
+                      '</div>' +
+                      '<div class="modal-2">' +
+                        '<div class="row text-center">' +
+                          '<strong class="lil">Smartly routed</strong>' +
+                          '<p class="sml">Lyft Line matches you with others travelling the same way</p>' +
+                          '<strong class="lil">Fixed trip price</strong>' +
+                          '<p class="sml">Price is set and always less than original Lyft, even if you don´t match with another rider.</p>' +
+                        '</div>' +
+                      '</div>' +
+                    '</div>' +
+                  '<p class="close-modal text-center" data-dismiss="modal">X</p>' +
+                '</div>' +
+               '</div>';
+
 var clientId = 'NIR2JfxWyaiW';
 var clientSecret = 'xqIMb-QVcQJWCJE5KMmGcAeofJYA5PgZ';
 var database = firebase.database();
@@ -135,6 +155,7 @@ var loadPage = function() {
     $('#button-getestimate').click(validate);
     $("#origin").click(hideCard);
     $("#button-signupride").click(redirectLyft);
+    $("#popup").hide();
     popUp();
 };
 
@@ -156,6 +177,8 @@ var getAjax = function(e) {
       },
       success: function(response) {
         console.log(response);
+        var name;
+        var index;
         var image;
         var text;
         var modText;
@@ -164,6 +187,8 @@ var getAjax = function(e) {
         var price;
         var sortedArray = response.cost_estimates.sort(function(objX, objY){return objX.estimated_cost_cents_min-objY.estimated_cost_cents_min});
         $.each(sortedArray, function(i, costes) {
+            index = costes.display_name.indexOf(" ");
+            name = (index > 0) ? costes.display_name.substr(index + 1) : costes.display_name;
             if (costes.ride_type === "lyft_plus") {
                 image = "lyft-plus.png";
                 text = "6 seats";
@@ -197,7 +222,7 @@ var getAjax = function(e) {
             } else {
                 price = Math.round(costes.estimated_cost_cents_min/100) + "-" + Math.round(costes.estimated_cost_cents_max/100);
             }
-            $("#calculate").append(template.replace("{{type}}", costes.display_name)
+            $("#calculate").append(template.replace("{{type}}", name)
                                            .replace("{{price}}", price)
                                            .replace("{{image}}", "img/" + image)
                                            .replace("{{text}}", text)
