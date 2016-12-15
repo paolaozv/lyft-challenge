@@ -146,16 +146,6 @@ var loadPage = function() {
         navigator.geolocation.getCurrentPosition(success, error);
     }
 
-    /*var myLatlng = new google.maps.LatLng(37.7749300, -122.4194200);
-    var myOptions = {
-        zoom: 9,
-        center: myLatlng,
-        mapTypeControl: false,
-        streetViewControl: false,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    map = new google.maps.Map(map, myOptions);*/
-
     $('#button-getestimate').click(getAjax);
     $('#button-getestimate').click(validate);
     $("#origin").click(hideCard);
@@ -175,14 +165,28 @@ var error = function(error) {
 };
 
 var showMap = function(lat, lon) {
+    var myOptions;
     latLon = new google.maps.LatLng(lat, lon);
-    var myOptions = {
-        zoom: 13,
-        center: latLon,
-        mapTypeControl: false,
-        streetViewControl: false,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
+    if (screen.width < 1024) {
+        myOptions = {
+            zoom: 13,
+            center: latLon,
+            mapTypeControl: false,
+            streetViewControl: false,
+            zoomControl: false,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+    } else {
+        myOptions = {
+            zoom: 13,
+            center: latLon,
+            mapTypeControl: false,
+            streetViewControl: false,
+            zoomControl: true,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+    }
+    
     map = new google.maps.Map(map, myOptions);
 };
 
