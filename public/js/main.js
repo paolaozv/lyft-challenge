@@ -9,8 +9,6 @@ var longDes;
 var latLon;
 
 var button = document.getElementById("button-getestimate");
-var origin = document.getElementById("origin");
-var destination = document.getElementById("destination");
 var map = document.getElementById("map");
 var directionsService = new google.maps.DirectionsService();
 var directionsRenderer = new google.maps.DirectionsRenderer({
@@ -66,11 +64,11 @@ var tempModal = '<div class="modal fade" tabindex="-1" role="dialog" id="{{id}}"
                   '</div>' +
                 '</div>';
 
-var tempLine = '<div class="modal fade" tabindex="-1" role="dialog" id="2">' +
+var tempLine = '<div class="modal fade" tabindex="-1" role="dialog" id={{id}}>' +
                 '<div class="modal-dialog" role="document">' +
                     '<div class="modal-body text-center">' +
                       '<div class="modal-1">' +
-                        '<b>Lyft Line</b><br><span>$4 - 6</span><br>' +
+                        '<b>{{type}}</b><br><span>${{price}}</span><br>' +
                         '<img src="img/lyft-match.png"  class="image-car" alt="">' +
                       '</div>' +
                       '<div class="modal-2">' +
@@ -149,6 +147,7 @@ var loadPage = function() {
     $('#button-getestimate').click(getAjax);
     $('#button-getestimate').click(validate);
     $("#origin").click(hideCard);
+    $("#destination").click(hideCard);
     $("#button-signupride").click(redirectLyft);
     $("#popup").hide();
     popUp();
@@ -223,21 +222,19 @@ var getAjax = function(e) {
                 text = "6 seats";
                 modText = "A supersized ride when you need more space. Fits up to 6 people.";
                 seats = "6";
-                pickup = "2.00";
+                pickup = "3.00";
             }
             if (costes.ride_type === "lyft_line") {
                 image = "lyft-line.png";
                 text = "Shared, 2 riders max";
-                modText = "Lyft Line matches you with others travelling the same way.";
                 seats = "1";
-                pickup = "2.00";
             }
             if (costes.ride_type === "lyft") {
                 image = "lyft-car.png";
                 text = "4 seats";
                 modText = "A personal ride for when you need to get to your destination fast. Fits up to 4 people.";
                 seats = "4";
-                pickup = "3.00";
+                pickup = "2.00";
             }
             if (costes.ride_type === "lyft_premier") {
                 text = "High-end,4 seats";
@@ -256,15 +253,21 @@ var getAjax = function(e) {
                                            .replace("{{image}}", "img/" + image)
                                            .replace("{{text}}", text)
                                            .replace("{{id}}", "#" + parseInt(i+1)));
-            $("#modal").append(tempModal.replace("{{type}}", costes.display_name)
-                                        .replace("{{min}}", (costes.estimated_cost_cents_min/100).toFixed(2))
-                                        .replace("{{mile}}", ((costes.estimated_cost_cents_min/costes.estimated_distance_miles)/100).toFixed(2))
-                                        .replace("{{minute}}", ((60*costes.estimated_cost_cents_min/costes.estimated_duration_seconds)/100).toFixed(2))
-                                        .replace("{{image}}", "img/" + image)
-                                        .replace("{{modText}}", modText)
-                                        .replace("{{seats}}", seats)
-                                        .replace("{{pickup}}", pickup)
-                                        .replace("{{id}}", parseInt(i+1)));
+            if (costes.ride_type === "lyft_line") {
+                $("#modal").append(tempLine.replace("{{type}}", costes.display_name)
+                                           .replace("{{price}}", price)
+                                           .replace("{{id}}", parseInt(i+1)));    
+            } else {
+                $("#modal").append(tempModal.replace("{{type}}", costes.display_name)
+                                            .replace("{{min}}", (costes.estimated_cost_cents_min/100).toFixed(2))
+                                            .replace("{{mile}}", ((costes.estimated_cost_cents_min/costes.estimated_distance_miles)/100).toFixed(2))
+                                            .replace("{{minute}}", ((60*costes.estimated_cost_cents_min/costes.estimated_duration_seconds)/100).toFixed(2))
+                                            .replace("{{image}}", "img/" + image)
+                                            .replace("{{modText}}", modText)
+                                            .replace("{{seats}}", seats)
+                                            .replace("{{pickup}}", pickup)
+                                            .replace("{{id}}", parseInt(i+1)));
+            }
         });
       },
       error: function(error) {
@@ -274,11 +277,11 @@ var getAjax = function(e) {
 };
 
 var initialize = function() {
-    var input = document.getElementById('origin');
-    var autocomplete = new google.maps.places.Autocomplete(input);
+    var origin = document.getElementById("origin");
+    var autocomplete = new google.maps.places.Autocomplete(origin);
 
-    var inputDos = document.getElementById('destination');
-    var autocompleteDos = new google.maps.places.Autocomplete(inputDos);
+    var destination = document.getElementById("destination");
+    var autocompleteDes = new google.maps.places.Autocomplete(destination);
     autocomplete.addListener('place_changed', function() {
         directionsRenderer.setMap(null);
         
@@ -304,7 +307,6 @@ var initialize = function() {
           map.fitBounds(place.geometry.viewport);
         } else {
           map.setCenter(place.geometry.location);
-          map.setZoom(17);
         }
         markerOr.setIcon(({
           url: '../img/map-pin-blue.png'
@@ -312,18 +314,11 @@ var initialize = function() {
         markerOr.setPosition(place.geometry.location);
         markerOr.setVisible(true);
 
-        var geocoder = new google.maps.Geocoder();
-        geocoder.geocode( { "address": origin.value}, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                latOr = results[0].geometry.location.lat();
-                longOr = results[0].geometry.location.lng();
-                console.log(latOr, longOr);
-            } 
-        });
-
+        latOr = place.geometry.location.lat();
+        longOr = place.geometry.location.lng();
     });
 
-    autocompleteDos.addListener('place_changed', function() {
+    autocompleteDes.addListener('place_changed', function() {
         if (marker != null) {
             marker.setMap(null);    
         }
@@ -333,7 +328,7 @@ var initialize = function() {
             anchorPoint: new google.maps.Point(0, -29)
         });
         marker.setVisible(false);
-        var place = autocompleteDos.getPlace();
+        var place = autocompleteDes.getPlace();
         if (!place.geometry) {
           window.alert("Autocomplete's returned place contains no geometry");
           return;
@@ -343,7 +338,6 @@ var initialize = function() {
           map.fitBounds(place.geometry.viewport);
         } else {
           map.setCenter(place.geometry.location);
-          map.setZoom(17); 
         }
         marker.setIcon(({
           url: '../img/map-pin-pink.png'
@@ -351,27 +345,21 @@ var initialize = function() {
         marker.setPosition(place.geometry.location);
         marker.setVisible(true);
         
-        var geocoder = new google.maps.Geocoder();
-            geocoder.geocode( { "address": destination.value}, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    latDes = results[0].geometry.location.lat();
-                    longDes = results[0].geometry.location.lng();
-                    console.log(latDes, longDes);
-                } 
-        });
-
+        latDes = place.geometry.location.lat();
+        longDes = place.geometry.location.lng();
+    
         var request = {
-            origin: origin.value,
-            destination: destination.value,
+            origin: new google.maps.LatLng(latOr, longOr),
+            destination: new google.maps.LatLng(latDes, longDes),
             travelMode: google.maps.TravelMode.DRIVING,
-            provideRouteAlternatives: true
-        
+            provideRouteAlternatives: true    
         };
 
         directionsService.route(request, function(response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
                 directionsRenderer.setMap(map);
                 directionsRenderer.setDirections(response);
+                console.log(response);
                 directionsRenderer.setOptions( { suppressMarkers: true } );
             } else {
                 alert("Lyft is not yet available in this region.");
@@ -405,7 +393,7 @@ $('.close-modal').click(function(){
 });
 
 var hideCard = function() {
-    $("#origin").val("");
+    $(this).val("");
     $("#destination").val("");
     $('#signup-ride').removeClass("showRides");
     $('#button-getestimate').removeClass("hideButton");
