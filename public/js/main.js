@@ -144,12 +144,10 @@ var loadPage = function() {
         navigator.geolocation.getCurrentPosition(success, error);
     }
 
-    $('#button-getestimate').click(getAjax);
-    $('#button-getestimate').click(validate);
     $("#origin").click(hideCard);
     $("#destination").click(hideCard);
     $("#button-signupride").click(redirectLyft);
-    $("#popup").hide();
+    /*$(".route-input").keydown(invalid);*/
     popUp();
 };
 
@@ -189,8 +187,7 @@ var showMap = function(lat, lon) {
     map = new google.maps.Map(map, myOptions);
 };
 
-var getAjax = function(e) {
-    e.preventDefault();
+var getAjax = function() {
     console.log(latDes);
     $.ajax({
       url: 'https://api.lyft.com/v1/cost',
@@ -202,6 +199,8 @@ var getAjax = function(e) {
       },
       beforeSend: function (xhr) {
         xhr.setRequestHeader ("Authorization", "bearer " + accessToken);
+        $(".spinner").show();
+        $(".get").hide();
       },
       success: function(response) {
         console.log(response);
@@ -269,9 +268,15 @@ var getAjax = function(e) {
                                             .replace("{{id}}", parseInt(i+1)));
             }
         });
+        $('#signup-ride').addClass('showRides');
+        $('#button-getestimate').addClass('hideButton');
+        $(".spinner").hide();
+        $(".get").show();
       },
       error: function(error) {
         console.log(error);
+        $(".spinner").hide();
+        $(".get").show();
       }
     }); 
 };
@@ -286,7 +291,7 @@ var initialize = function() {
         directionsRenderer.setMap(null);
         
         if (markerOr != null) {
-            markerOr.setMap(null);    
+            markerOr.setMap(null);  
         }
         if (marker != null) {
             marker.setMap(null);
@@ -307,6 +312,7 @@ var initialize = function() {
           map.fitBounds(place.geometry.viewport);
         } else {
           map.setCenter(place.geometry.location);
+          map.setZoom(5);
         }
         markerOr.setIcon(({
           url: '../img/map-pin-blue.png'
@@ -338,6 +344,7 @@ var initialize = function() {
           map.fitBounds(place.geometry.viewport);
         } else {
           map.setCenter(place.geometry.location);
+          map.setZoom(5);
         }
         marker.setIcon(({
           url: '../img/map-pin-pink.png'
@@ -366,6 +373,7 @@ var initialize = function() {
             }
 
         });
+        validate();
     });
 };
 
@@ -376,8 +384,7 @@ var validate = function() {
     var originVal = $("#origin").val().trim().length;
     var destinationVal = $("#destination").val().trim().length;
     if (originVal > 0 && destinationVal > 0) {
-        $('#signup-ride').addClass('showRides');
-        $('#button-getestimate').addClass('hideButton');
+        getAjax();
     }
     // else{
     //     alert("You must insert an origin and destination location");
@@ -397,6 +404,8 @@ var hideCard = function() {
     $("#destination").val("");
     $('#signup-ride').removeClass("showRides");
     $('#button-getestimate').removeClass("hideButton");
+    $(".spinner").hide();
+    $(".get").show();
     $("#calculate").empty();
     $("#modal").empty();
 };
@@ -410,3 +419,11 @@ var popUp = function() {
       $("#popup").modal("show");
   }
 };
+
+/*var invalid = function(e) {
+    var address = $(".pac-container").children().length;
+    console.log(address);
+    if (address === 0) {
+        $(".pac-container").text("invalid");
+    }
+};*/
