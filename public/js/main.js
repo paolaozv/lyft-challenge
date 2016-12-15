@@ -28,7 +28,7 @@ var template = '<hr class="sep">' +
                         '<span class="status">{{text}}</span>' +
                     '</div>' +
                     '<div class="prices text-right">' +
-                        '<span class="price">${{min}}-{{max}}</span>' +
+                        '<span class="price">${{price}}</span>' +
                         '<i class="fa fa-info-circle info" aria-hidden="true" data-toggle="modal" data-target="{{id}}"></i>' +
                     '</div>' +
                 '</div>';
@@ -117,15 +117,6 @@ var writeDataToFirebase = function (database, data) {
 
 var loadPage = function() {
 
-    /*window.location.href = "index.html" + "?dl=true";*/
-
-   /* if (window.location.href = "index.html" + "?dl=true") {
-        $("#popup").show();
-    } else {
-        $("#popup").hide();
-    }*/
-
-
     var tokens = database.ref("tokens/");
 
     tokens.on('value', useToken);
@@ -143,15 +134,11 @@ var loadPage = function() {
     $('#button-getestimate').click(getAjax);
     $('#button-getestimate').click(validate);
     $("#origin").click(hideCard);
-    /*$(".downpop").click(redirect);*/
     $("#button-signupride").click(redirectLyft);
+    popUp();
 };
 
 $(document).ready(loadPage);
-
-/*var redirect = function() {
-    window.location.href = "index.html";
-};*/
 
 var getAjax = function(e) {
     e.preventDefault();
@@ -174,7 +161,9 @@ var getAjax = function(e) {
         var modText;
         var seats;
         var accessToken;
-        $.each(response.cost_estimates, function(i, costes) {
+        var price;
+        var sortedArray = response.cost_estimates.sort(function(objX, objY){return objX.estimated_cost_cents_min-objY.estimated_cost_cents_min});
+        $.each(sortedArray, function(i, costes) {
             if (costes.ride_type === "lyft_plus") {
                 image = "lyft-plus.png";
                 text = "6 seats";
@@ -203,21 +192,25 @@ var getAjax = function(e) {
                 seats = "4";
                 pickup = "5.00";
             }
+            if (costes.estimated_cost_cents_min === costes.estimated_cost_cents_max) {
+                price = Math.round(costes.estimated_cost_cents_min/100);
+            } else {
+                price = Math.round(costes.estimated_cost_cents_min/100) + "-" + Math.round(costes.estimated_cost_cents_max/100);
+            }
             $("#calculate").append(template.replace("{{type}}", costes.display_name)
-                                           .replace("{{min}}", (costes.estimated_cost_cents_min/100))
-                                           .replace("{{max}}", (costes.estimated_cost_cents_max/100))
+                                           .replace("{{price}}", price)
                                            .replace("{{image}}", "img/" + image)
                                            .replace("{{text}}", text)
                                            .replace("{{id}}", "#" + parseInt(i+1)));
             $("#modal").append(tempModal.replace("{{type}}", costes.display_name)
-                                       .replace("{{min}}", (costes.estimated_cost_cents_min/100))
-                                       .replace("{{mile}}", ((costes.estimated_cost_cents_min/costes.estimated_distance_miles)/100).toFixed(2))
-                                       .replace("{{minute}}", ((60*costes.estimated_cost_cents_min/costes.estimated_duration_seconds)/100).toFixed(2))
-                                       .replace("{{image}}", "img/" + image)
-                                       .replace("{{modText}}", modText)
-                                       .replace("{{seats}}", seats)
-                                       .replace("{{pickup}}", pickup)
-                                       .replace("{{id}}", parseInt(i+1)));
+                                        .replace("{{min}}", (costes.estimated_cost_cents_min/100).toFixed(2))
+                                        .replace("{{mile}}", ((costes.estimated_cost_cents_min/costes.estimated_distance_miles)/100).toFixed(2))
+                                        .replace("{{minute}}", ((60*costes.estimated_cost_cents_min/costes.estimated_duration_seconds)/100).toFixed(2))
+                                        .replace("{{image}}", "img/" + image)
+                                        .replace("{{modText}}", modText)
+                                        .replace("{{seats}}", seats)
+                                        .replace("{{pickup}}", pickup)
+                                        .replace("{{id}}", parseInt(i+1)));
         });
       },
       error: function(error) {
@@ -357,7 +350,6 @@ $('.close-modal').click(function(){
     $('.wrapper').removeClass('bg-blur');
 });
 
-
 var hideCard = function() {
     $("#origin").val("");
     $("#destination").val("");
@@ -369,4 +361,10 @@ var hideCard = function() {
 
 var redirectLyft = function() {
     window.open("https://www.lyft.com/signup", "_blank");
+};
+
+var popUp = function() {
+  if (window.location.search === "?dl=true") {
+      $("#popup").modal("show");
+  }
 };
